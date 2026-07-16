@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: logql-postgres
+    environment:
+      POSTGRES_USER: sarniva
+      POSTGRES_PASSWORD: sarniva_9932
+      POSTGRES_DB: logql_metadata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - pipeline_net
+
+  redis:
+    image: redis:8-alpine
+    container_name: logql-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pipeline_net
+
+  quickwit:
+    image: quickwit/quickwit:latest
+    container_name: logql-quickwit
+    command: ["run"]
+    ports:
+      - "7280:7280"
+    environment:
+      - QW_ENABLE_OPENELEMETRY=0
+    volumes:
+      - qw_data:/qwdata
+    networks:
+      - pipeline_net
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: logql-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - pipeline_net
+
+volumes:
+  pg_data:
+  redis_data:
+  qw_data:
+  qdrant_data:
+
+networks:
+  pipeline_net:
+    driver: bridge
