@@ -4,7 +4,9 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "hono": "^4.12.30"
+    "hono": "^4.12.30",
+    "ioredis": "^5.11.1",
+    "@repo/db-core": "*"
   },
   "devDependencies": {
     "@types/bun": "latest"
