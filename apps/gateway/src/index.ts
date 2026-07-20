@@ -4,7 +4,13 @@ import { authMiddleware } from "./middlewares/auth";
 import { rateLimitMiddleware } from "./middlewares/rateLimit";
 import { pushToQueue } from "./queue";
 
-const app = new Hono();
+type GatewayAppEnv = {
+  Variables: {
+    tenantId: string;
+  };
+};
+
+const app = new Hono<GatewayAppEnv>();
 
 app.use("*", logger());
 app.use("/v1/ingest", authMiddleware);
@@ -14,7 +20,7 @@ app.post("/v1/ingest", async (c) => {
   try {
     const body = await c.req.json();
 
-    const tenantId = "tenantId";
+    const tenantId = c.var.tenantId;
 
     const logPayload = JSON.stringify({
       tenantId,

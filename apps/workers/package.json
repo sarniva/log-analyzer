@@ -3,6 +3,16 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^9.4.2",
+    "@huggingface/transformers": "^4.2.0",
+    "@qdrant/js-client-rest": "^1.18.0",
+    "@repo/db-core": "workspace:*",
+    "ioredis": "^5.11.1"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

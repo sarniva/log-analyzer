@@ -6,7 +6,7 @@
   "dependencies": {
     "hono": "^4.12.30",
     "ioredis": "^5.11.1",
-    "@repo/db-core": "*"
+    "@repo/db-core": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "latest"
